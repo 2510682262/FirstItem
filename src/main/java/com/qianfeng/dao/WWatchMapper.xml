@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.dao.WWatchMapper">
+  <resultMap id="BaseResultMap" type="com.qianfeng.pojo.WWatch">
+    <id column="watch_id" jdbcType="INTEGER" property="watchId" />
+    <result column="watch_name" jdbcType="VARCHAR" property="watchName" />
+    <result column="watch_sex" jdbcType="INTEGER" property="watchSex" />
+    <result column="watch_movement" jdbcType="INTEGER" property="watchMovement" />
+    <result column="watch_watchband" jdbcType="INTEGER" property="watchWatchband" />
+    <result column="watch_shape" jdbcType="INTEGER" property="watchShape" />
+    <result column="watch_size" jdbcType="INTEGER" property="watchSize" />
+    <result column="watch_colour" jdbcType="INTEGER" property="watchColour" />
+    <result column="watch_series" jdbcType="INTEGER" property="watchSeries" />
+    <result column="watch_imgpath" jdbcType="VARCHAR" property="watchImgpath" />
+    <result column="watch_price" jdbcType="INTEGER" property="watchPrice" />
+    <result column="watch_flag" jdbcType="INTEGER" property="watchFlag" />
+    <result column="watch_recommended" jdbcType="INTEGER" property="watchRecommended" />
+    <result column="watch_context" jdbcType="INTEGER" property="watchContext" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    watch_id, watch_name, watch_sex, watch_movement, watch_watchband, watch_shape, watch_size, 
+    watch_colour, watch_series, watch_imgpath, watch_price, watch_flag, watch_recommended, 
+    watch_context
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from w_watch
+    where watch_id = #{watchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from w_watch
+    where watch_id = #{watchId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qianfeng.pojo.WWatch">
+    insert into w_watch (watch_id, watch_name, watch_sex, 
+      watch_movement, watch_watchband, watch_shape, 
+      watch_size, watch_colour, watch_series, 
+      watch_imgpath, watch_price, watch_flag, 
+      watch_recommended, watch_context)
+    values (#{watchId,jdbcType=INTEGER}, #{watchName,jdbcType=VARCHAR}, #{watchSex,jdbcType=INTEGER}, 
+      #{watchMovement,jdbcType=INTEGER}, #{watchWatchband,jdbcType=INTEGER}, #{watchShape,jdbcType=INTEGER}, 
+      #{watchSize,jdbcType=INTEGER}, #{watchColour,jdbcType=INTEGER}, #{watchSeries,jdbcType=INTEGER}, 
+      #{watchImgpath,jdbcType=VARCHAR}, #{watchPrice,jdbcType=INTEGER}, #{watchFlag,jdbcType=INTEGER}, 
+      #{watchRecommended,jdbcType=INTEGER}, #{watchContext,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qianfeng.pojo.WWatch">
+    insert into w_watch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="watchId != null">
+        watch_id,
+      </if>
+      <if test="watchName != null">
+        watch_name,
+      </if>
+      <if test="watchSex != null">
+        watch_sex,
+      </if>
+      <if test="watchMovement != null">
+        watch_movement,
+      </if>
+      <if test="watchWatchband != null">
+        watch_watchband,
+      </if>
+      <if test="watchShape != null">
+        watch_shape,
+      </if>
+      <if test="watchSize != null">
+        watch_size,
+      </if>
+      <if test="watchColour != null">
+        watch_colour,
+      </if>
+      <if test="watchSeries != null">
+        watch_series,
+      </if>
+      <if test="watchImgpath != null">
+        watch_imgpath,
+      </if>
+      <if test="watchPrice != null">
+        watch_price,
+      </if>
+      <if test="watchFlag != null">
+        watch_flag,
+      </if>
+      <if test="watchRecommended != null">
+        watch_recommended,
+      </if>
+      <if test="watchContext != null">
+        watch_context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="watchId != null">
+        #{watchId,jdbcType=INTEGER},
+      </if>
+      <if test="watchName != null">
+        #{watchName,jdbcType=VARCHAR},
+      </if>
+      <if test="watchSex != null">
+        #{watchSex,jdbcType=INTEGER},
+      </if>
+      <if test="watchMovement != null">
+        #{watchMovement,jdbcType=INTEGER},
+      </if>
+      <if test="watchWatchband != null">
+        #{watchWatchband,jdbcType=INTEGER},
+      </if>
+      <if test="watchShape != null">
+        #{watchShape,jdbcType=INTEGER},
+      </if>
+      <if test="watchSize != null">
+        #{watchSize,jdbcType=INTEGER},
+      </if>
+      <if test="watchColour != null">
+        #{watchColour,jdbcType=INTEGER},
+      </if>
+      <if test="watchSeries != null">
+        #{watchSeries,jdbcType=INTEGER},
+      </if>
+      <if test="watchImgpath != null">
+        #{watchImgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="watchPrice != null">
+        #{watchPrice,jdbcType=INTEGER},
+      </if>
+      <if test="watchFlag != null">
+        #{watchFlag,jdbcType=INTEGER},
+      </if>
+      <if test="watchRecommended != null">
+        #{watchRecommended,jdbcType=INTEGER},
+      </if>
+      <if test="watchContext != null">
+        #{watchContext,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianfeng.pojo.WWatch">
+    update w_watch
+    <set>
+      <if test="watchName != null">
+        watch_name = #{watchName,jdbcType=VARCHAR},
+      </if>
+      <if test="watchSex != null">
+        watch_sex = #{watchSex,jdbcType=INTEGER},
+      </if>
+      <if test="watchMovement != null">
+        watch_movement = #{watchMovement,jdbcType=INTEGER},
+      </if>
+      <if test="watchWatchband != null">
+        watch_watchband = #{watchWatchband,jdbcType=INTEGER},
+      </if>
+      <if test="watchShape != null">
+        watch_shape = #{watchShape,jdbcType=INTEGER},
+      </if>
+      <if test="watchSize != null">
+        watch_size = #{watchSize,jdbcType=INTEGER},
+      </if>
+      <if test="watchColour != null">
+        watch_colour = #{watchColour,jdbcType=INTEGER},
+      </if>
+      <if test="watchSeries != null">
+        watch_series = #{watchSeries,jdbcType=INTEGER},
+      </if>
+      <if test="watchImgpath != null">
+        watch_imgpath = #{watchImgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="watchPrice != null">
+        watch_price = #{watchPrice,jdbcType=INTEGER},
+      </if>
+      <if test="watchFlag != null">
+        watch_flag = #{watchFlag,jdbcType=INTEGER},
+      </if>
+      <if test="watchRecommended != null">
+        watch_recommended = #{watchRecommended,jdbcType=INTEGER},
+      </if>
+      <if test="watchContext != null">
+        watch_context = #{watchContext,jdbcType=INTEGER},
+      </if>
+    </set>
+    where watch_id = #{watchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianfeng.pojo.WWatch">
+    update w_watch
+    set watch_name = #{watchName,jdbcType=VARCHAR},
+      watch_sex = #{watchSex,jdbcType=INTEGER},
+      watch_movement = #{watchMovement,jdbcType=INTEGER},
+      watch_watchband = #{watchWatchband,jdbcType=INTEGER},
+      watch_shape = #{watchShape,jdbcType=INTEGER},
+      watch_size = #{watchSize,jdbcType=INTEGER},
+      watch_colour = #{watchColour,jdbcType=INTEGER},
+      watch_series = #{watchSeries,jdbcType=INTEGER},
+      watch_imgpath = #{watchImgpath,jdbcType=VARCHAR},
+      watch_price = #{watchPrice,jdbcType=INTEGER},
+      watch_flag = #{watchFlag,jdbcType=INTEGER},
+      watch_recommended = #{watchRecommended,jdbcType=INTEGER},
+      watch_context = #{watchContext,jdbcType=INTEGER}
+    where watch_id = #{watchId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select * from w_watch where 1=1
+    <if test="watch.watchSex != 0">
+      and watch_sex = #{watch.watchSex}
+    </if>
+    <if test="watch.watchMovement != 0">
+      and watch_movement = #{watch.watchMovement}
+    </if>
+    <if test="watch.watchWatchband != 0">
+      and watch_watchband = #{watch.watchWatchband}
+    </if>
+    <if test="watch.watchShape != 0">
+      and watch_shape = #{watch.watchShape}
+    </if>
+    <if test="watch.watchSize != 0">
+      and watch_size = #{watch.watchSize}
+    </if>
+    <if test="watch.watchColour != 0">
+      and watch_colour = #{watch.watchColour}
+    </if>
+    <if test="watch.watchSeries != 0">
+      and watch_series = #{watch.watchSeries}
+    </if>
+    <if test="watch.watchImgpath != null">
+      and watch_imgpath = #{watch.watchImgpath}
+    </if>
+    <if test="watch.watchPrice != null">
+      and watch_price = #{watch.watchPrice}
+    </if>
+    <if test="watch.watchFlag != null">
+      and watch_flag = #{watch.watchFlag}
+    </if>
+    <if test="watch.watchRecommended != 0">
+      and watch_recommended = #{watch.watchRecommended}
+    </if>
+    <if test="watch.watchContext != 0">
+      and watch_context = #{watch.watchContext}
+    </if>
+    limit #{page},#{limit}
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from w_watch limit #{page},#{limit}
+    </select>
+
+    <select id="selectByWatchName" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" />
+      from w_watch
+      <if test="'name' != null">
+        where watch_name like "%"#{name}"%"
+      </if>
+    </select>
+
+  <select id="count" resultType="java.lang.Integer">
+    select count(*) from w_watch where 1=1
+    <if test="watchSex != 0">
+      and watch_sex = #{watchSex}
+    </if>
+    <if test="watchMovement != 0">
+      and watch_movement = #{watchMovement}
+    </if>
+    <if test="watchWatchband != 0">
+      and watch_watchband = #{watchWatchband}
+    </if>
+    <if test="watchShape != 0">
+      and watch_shape = #{watchShape}
+    </if>
+    <if test="watchSize != 0">
+      and watch_size = #{watchSize}
+    </if>
+    <if test="watchColour != 0">
+      and watch_colour = #{watchColour}
+    </if>
+    <if test="watchSeries != 0">
+      and watch_series = #{watchSeries}
+    </if>
+    <if test="watchImgpath != null">
+      and watch_imgpath = #{watchImgpath}
+    </if>
+    <if test="watchPrice != null">
+      and watch_price = #{watchPrice}
+    </if>
+    <if test="watchFlag != null">
+      and watch_flag = #{watchFlag}
+    </if>
+    <if test="watchRecommended != 0">
+      and watch_recommended = #{watchRecommended}
+    </if>
+    <if test="watchContext != 0">
+      and watch_context = #{watchContext}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.dao.WDictMapper">
+    <resultMap id="BaseResultMap" type="com.qianfeng.pojo.WDict">
+        <id column="dict_id" jdbcType="INTEGER" property="dictId"/>
+        <result column="dict_type" jdbcType="VARCHAR" property="dictType"/>
+        <result column="dict_item" jdbcType="VARCHAR" property="dictItem"/>
+        <result column="dict_status" jdbcType="INTEGER" property="dictStatus"/>
+        <result column="dict_pid" jdbcType="INTEGER" property="dictPid"/>
+        <result column="dict_watchName" jdbcType="VARCHAR" property="dictWatchname"/>
+    </resultMap>
+
+    <resultMap id="vWDictMap" type="com.qianfeng.vo.VWDict">
+        <result column="pid" property="id"/>
+        <result column="pname" property="menuName"/>
+        <result column="watchName" property="watchName"/>
+        <collection property="cMenuList" javaType="java.util.ArrayList" ofType="com.qianfeng.vo.VWDict">
+            <result column="cid" property="id"/>
+            <result column="cname" property="menuName"/>
+        </collection>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        dict_id, dict_type, dict_item, dict_status, dict_pid, dict_watchName
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from w_dict
+        where dict_id = #{dictId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from w_dict
+        where dict_id = #{dictId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.qianfeng.pojo.WDict">
+        insert into w_dict (dict_id, dict_type, dict_item,
+        dict_status, dict_pid, dict_watchName
+        )
+        values (#{dictId,jdbcType=INTEGER}, #{dictType,jdbcType=VARCHAR}, #{dictItem,jdbcType=VARCHAR},
+        #{dictStatus,jdbcType=INTEGER}, #{dictPid,jdbcType=INTEGER}, #{dictWatchname,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.qianfeng.pojo.WDict">
+        insert into w_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dictId != null">
+                dict_id,
+            </if>
+            <if test="dictType != null">
+                dict_type,
+            </if>
+            <if test="dictItem != null">
+                dict_item,
+            </if>
+            <if test="dictStatus != null">
+                dict_status,
+            </if>
+            <if test="dictPid != null">
+                dict_pid,
+            </if>
+            <if test="dictWatchname != null">
+                dict_watchName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dictId != null">
+                #{dictId,jdbcType=INTEGER},
+            </if>
+            <if test="dictType != null">
+                #{dictType,jdbcType=VARCHAR},
+            </if>
+            <if test="dictItem != null">
+                #{dictItem,jdbcType=VARCHAR},
+            </if>
+            <if test="dictStatus != null">
+                #{dictStatus,jdbcType=INTEGER},
+            </if>
+            <if test="dictPid != null">
+                #{dictPid,jdbcType=INTEGER},
+            </if>
+            <if test="dictWatchname != null">
+                #{dictWatchname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qianfeng.pojo.WDict">
+        update w_dict
+        <set>
+            <if test="dictType != null">
+                dict_type = #{dictType,jdbcType=VARCHAR},
+            </if>
+            <if test="dictItem != null">
+                dict_item = #{dictItem,jdbcType=VARCHAR},
+            </if>
+            <if test="dictStatus != null">
+                dict_status = #{dictStatus,jdbcType=INTEGER},
+            </if>
+            <if test="dictPid != null">
+                dict_pid = #{dictPid,jdbcType=INTEGER},
+            </if>
+            <if test="dictWatchname != null">
+                dict_watchName = #{dictWatchname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where dict_id = #{dictId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qianfeng.pojo.WDict">
+        update w_dict
+        set dict_type = #{dictType,jdbcType=VARCHAR},
+        dict_item = #{dictItem,jdbcType=VARCHAR},
+        dict_status = #{dictStatus,jdbcType=INTEGER},
+        dict_pid = #{dictPid,jdbcType=INTEGER},
+        dict_watchName = #{dictWatchname,jdbcType=VARCHAR}
+        where dict_id = #{dictId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from w_dict
+    </select>
+
+    <select id="menuInfo" resultMap="vWDictMap">
+        SELECT d.dict_id pid,d.dict_type pname,c.dict_id cid,c.dict_item cname from w_dict d
+        INNER JOIN w_dict c
+        on d.dict_id = c.dict_pid
+    </select>
+
+
+</mapper>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="udata">
+    <div class="layui-row">
+        <div class="layui-col-md4 layui-col-md-offset9">
+            <div class="layui-col-md3" style="margin-top: 10px">
+                <i class="layui-icon layui-icon-search"></i></label><input id="smsg" type="text" name="msg" placeholder="请输入搜索内容" style="border: none;width: 70px;margin-left: 4px">
+            </div>
+            <div class="layui-col-md3" style="margin-top: 10px">
+                <i class="layui-icon layui-icon-username"></i><a href="login.html"><span id="zhanghu">我的账户</span></a>
+            </div>
+            <div class="layui-col-md3">
+                <div style="width: 100px;height: 40px;background-color:#CC0000">
+                    <div style="margin: 0 auto;text-align: center;line-height: 40px">
+                        <span id="gouwuche">
+                            <a href="shoppingCart.html"><font color="white"><i class="layui-icon layui-icon-cart-simple"></i>购物车</font></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <center><img src="img/logo.png" width="200" height="50" style="margin-top: 10px"></center>
+    </div>
+
+    <div class="layui-main">
+        <div class="layui-tab layui-tab-brief layui-main" lay-filter="docDemoTabBrief" style="" >
+            <form action="" onsubmit="return false">
+                <ul class="layui-tab-title">
+                    <!--<li class="layui-this">网站设置</li>-->
+                    <li v-for="m in obj">
+                        <label>{{m.menuName}}</label>
+                        <select :name="m.watchName">
+                            <option value="0">全部</option>
+                            <option v-for="c in m.cMenuList" :value="c.id">{{c.menuName}}</option>
+                        </select>
+                    </li>
+                </ul>
+                <input type="submit" value="搜索" onclick="goods()">
+            </form>
+            <div class="layui-tab-content"></div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="width: 1519.2px;height:545.4px;background-color: #d5d5d5 ">
+        <div class="layui-col-md3" v-for="list in lists" >
+            <div class="layui-col-md3">
+                <div style="height:495.4px;width: 307.35px;background-color: white">
+                    <div align="center">
+                        <img v-bind:src="list.watchImgpath" width="265px">
+                    </div>
+                    <div class="text" style="text-align: center;"><font color="black"><span>{{list.watchName}}</span></font></div><br>
+                    <div class="text" style="text-align: center;"><font color="#dcdcdc">{{list.watchName}}</font></div><br>
+                    <div class="text" style="text-align: center;"><font color="red">￥ <span>{{list.watchPrice}}</span></font></div><br>
+                    <div>
+                        <div class="text" style="width: 116px;height: 29.2px;background-color: red;margin: 0 auto;text-align: center;line-height: 29.2px"><font color="white"><a :href="'goods.html?watchId=' + list.watchId ">立即购买</a></font></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pading"></div>
+</div>
+
+
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    var appdata = new Vue({
+        el:'#udata',
+        data:{
+            obj:[],
+            lists:[]
+        }
+    });
+    $(function(){
+        $.ajax({
+            type:"get",
+            url:"menu.do",
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                if (data.code == 1) {
+                    appdata.obj = data.info;
+                    console.log(appdata.obj);
+                }
+            }
+        })
+    })
+
+    var count = 0;
+
+    function num(){
+        $.ajax({
+            type:"get",
+            url:"/watch/count.do",
+            data:$("form").serialize(),
+            dataType:"json",
+            success:function (data) {
+                if (data.code == 1){
+                    count = data.info;
+                    layui.use(['laypage'], function(){
+                        var laypage = layui.laypage;
+                        //调用分页
+                        laypage.render({
+                            elem: 'pading'
+                            ,count: count
+                            ,limit: 8
+                            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                            ,jump: function(obj){
+                                var page = (obj.curr - 1 ) * obj.limit;
+                                $.ajax({
+                                    type:"get",
+                                    url:"/watch/select.do?page=" + page + "&limit="+ obj.limit,
+                                    data:$("form").serialize(),
+                                    dataType:"json",
+                                    success:function(data){
+                                        if (data.code == 1){
+                                            var infos = data.info;
+                                            appdata.lists=infos;
+                                        } else{
+                                            layer.msg(data.info);
+                                        }
+                                    }
+                                })
+                            }
+                        });
+
+                    });
+                }
+            }
+        })
+
+    }
+
+    function goods(){
+        num();
+    }
+
+    $(function () {
+        $.ajax({
+            type:"get",
+            url:"/user/judge.do",
+            dataType:"json",
+            success:function (data) {
+                if (data.code == 1){
+                    $("#zhanghu").empty();
+                    var infos = data.info;
+                    //$("#zhanghu").text(data.info.userName);
+                    html = '<a href="personal.html?userId='+infos.userId+'">' + infos.userName +'</a>';
+                    $("#zhanghu").append(html);
+
+                    $("#gouwuche").empty();
+                    html2 = '<a href="LoginShoppingCart.html"><font color="white"><i class="layui-icon layui-icon-cart-simple"></i>购物车</font></a>';
+                    $("#gouwuche").append(html2);
+
+                }
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

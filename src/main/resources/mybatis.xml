@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 主配置文件 -->
+<configuration>
+
+	<settings>
+	<!-- 针对mybatis,使用log4j打印日志 -->
+		<setting name="logImpl" value="LOG4J"/>
+		<!-- 映射数据时，字段的下划线转驼峰 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.qianfeng.vo.VWDict" alias="VWDict"></typeAlias>
+	</typeAliases>
+
+
+
+</configuration>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+</head>
+<body>
+<div class="layui-row">
+    <div class="layui-col-md4 layui-col-md-offset9">
+        <div class="layui-col-md3" style="margin-top: 10px">
+            <i class="layui-icon layui-icon-search"></i></label><input id="smsg" type="text" name="msg" placeholder="请输入搜索内容" style="border: none;width: 70px;margin-left: 4px">
+        </div>
+        <div class="layui-col-md3" style="margin-top: 10px">
+            <i class="layui-icon layui-icon-username"></i><a href="login.html"><span id="zhanghu">我的账户</span></a>
+        </div>
+        <div class="layui-col-md3">
+            <div style="width: 100px;height: 40px;background-color:#CC0000">
+                <div style="margin: 0 auto;text-align: center;line-height: 40px">
+                        <span id="gouwuche">
+                            <a href="shoppingCart.html"><font color="white"><i class="layui-icon layui-icon-cart-simple"></i>购物车</font></a>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-row">
+    <div class="layui-col-md4 layui-col-md-offset5">
+        <img src="img/logo.png" width="200" height="50" style="margin-top: 10px">
+    </div>
+
+</div>
+<div class="layui-main">
+    <div class="layui-tab layui-tab-brief layui-main" lay-filter="docDemoTabBrief" style="">
+        <ul class="layui-tab-title">
+            <a href="goodsList.html">
+                <!--<li class="layui-this">网站设置</li>-->
+                <li>两分钟选表&emsp;&emsp;|</li>
+                <li>官网推荐&emsp;&emsp;|</li>
+                <li>男士&emsp;&emsp;|</li>
+                <li>女士&emsp;&emsp;|</li>
+                <li>产品分类&emsp;&emsp;|</li>
+                <li>场合&emsp;&emsp;|</li>
+                <li>功能&emsp;&emsp;|</li>
+                <li>价格区间&emsp;&emsp;|</li>
+                <li>品牌专区&emsp;&emsp;|</li>
+                <li>客户服务&emsp;&emsp;|</li>
+                <li>查询实体店铺&emsp;&emsp;</li>
+            </a>
+
+        </ul>
+        <div class="layui-tab-content"></div>
+    </div>
+</div>
+<div class="layui-row" style="margin-top: 40px">
+    <div class="layui-col-md4 layui-col-md-offset5">
+        <h3><b>&emsp;&nbsp;购物车为空</b></h3><br>
+        <p>&emsp;&nbsp;&nbsp;您的购物车内没有物品</p><br>
+        <div style="width: 200px;height: 40px;background-color: black">
+            <div style="line-height: 40px;margin: 0 auto;text-align: center;"><a href="list.html"><font color="white">继续购物</font></a></div>
+        </div>
+    </div>
+</div>
+
+<!--<div style="margin-top: 100px">
+    <img src="img/QQBR%7D6KMLEJ%5DVFX@O%7B$%5BF(0.png" width="1550" height="500">
+</div>-->
+
+<script>
+    $(function () {
+        $.ajax({
+            type:"post",
+            url:"/order/query.do",
+            dataType:"json",
+            success:function (data) {
+                if (data.code == 1){
+                    window.location.href = "LoginShoppingCart.html";
+                }else {
+                    alert(data.info);
+                }
+            }
+        })
+    })
+
+    $(function () {
+        $.ajax({
+            type:"get",
+            url:"/user/judge.do",
+            dataType:"json",
+            success:function (data) {
+                if (data.code == 1){
+                    $("#zhanghu").empty();
+                    var infos = data.info;
+                    //$("#zhanghu").text(data.info.userName);
+                    html = '<a href="personal.html?userId='+infos.userId+'">' + infos.userName +'</a>';
+                    $("#zhanghu").append(html);
+
+                    $("#gouwuche").empty();
+                    html2 = '<a href="LoginShoppingCart.html"><font color="white"><i class="layui-icon layui-icon-cart-simple"></i>购物车</font></a>';
+                    $("#gouwuche").append(html2);
+
+                }
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

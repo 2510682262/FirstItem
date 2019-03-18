@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<select id="sumyear">
+    <option grade="0" value="a">请选择年份</option>
+    <option grade="1" :value="b">2018</option>
+    <option grade="2" value="c">2019</option>
+</select>
+
+
+<script>
+    $("#sumyear").change(function () {
+        alert($(this).children('option:selected').val());
+        alert("请选择年份")
+    })
+</script>
+</body>
+</html>
